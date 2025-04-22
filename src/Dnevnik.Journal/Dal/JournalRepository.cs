@@ -11,6 +11,10 @@ public class JournalRepository(JournalDbContext dbContext) : IJournalRepository
     public async Task<IEnumerable<MarkDto>> AddMarks(CreateMarkRequest[] marks)
     {
         var range = marks.Select(ToUserMarks).ToList();
+        foreach (var settedMarks in range.Select(mark => dbContext.UserMarks.Where(a => a.UserId == mark.UserId && a.LessonId == mark.LessonId)))
+        {
+            dbContext.UserMarks.RemoveRange(settedMarks);
+        }
         await dbContext.UserMarks.AddRangeAsync(range);
         
         await dbContext.SaveChangesAsync();
