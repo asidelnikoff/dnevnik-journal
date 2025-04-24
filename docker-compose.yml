@@ -1,6 +1,10 @@
 ﻿volumes:
   pg_data:
 
+networks:
+  journal_net:
+    driver: bridge
+
 services:
   journal-db:
     image: postgres:16-alpine
@@ -12,9 +16,15 @@ services:
       - 5508:5432
     volumes:
       - pg_data:/var/lib/postgresql/data
-#  dnevnik.journal:
-#    image: dnevnik.journal
-#    build:
-#      context: .
-#      dockerfile: src/Dnevnik.Journal/Dockerfile
-  
+    networks:
+      - journal_net
+  dnevnik.journal:
+    build:
+      context: .
+      dockerfile: src/Dnevnik.Journal/Dockerfile
+    ports:
+      - "5507:8080"
+    environment:
+      - ConnectionStrings__JournalConnection=Host=journal-db;Port=5432;Database=postgres;Username=postgres;Password=postgres;MaxPoolSize=500;MinPoolSize=250;ConnectionIdleLifetime=60;Timeout=30;ConnectionPruningInterval=10;
+    networks:
+      - journal_net
