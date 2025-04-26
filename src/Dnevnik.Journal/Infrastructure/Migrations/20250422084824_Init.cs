@@ -19,7 +19,7 @@ namespace Dnevnik.Journal.Infrastructure.Migrations
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     lesson_id = table.Column<Guid>(type: "uuid", nullable: false),
                     subject = table.Column<string>(type: "text", nullable: true),
-                    mark = table.Column<string>(type: "text", nullable: false),
+                    mark = table.Column<string>(type: "text", nullable: true),
                     comment = table.Column<string>(type: "text", nullable: true),
                     created_at = table.Column<DateTime>(type: "timestamptz", nullable: false),
                     updated_at = table.Column<DateTime>(type: "timestamptz", nullable: false)

@@ -56,6 +56,7 @@ public class JournalRepository(JournalDbContext dbContext) : IJournalRepository
     public List<MarkDto> GetMarks(FiltersRequest filtersRequest)
     {
         var marks = dbContext.UserMarks.AsQueryable()
+            .Where(a => a.Mark != null)
             .FilterByUserId(filtersRequest.UserId)
             .FilterByLessonId(filtersRequest.LessonId)
             .FilterBySubject(filtersRequest.Subject)
