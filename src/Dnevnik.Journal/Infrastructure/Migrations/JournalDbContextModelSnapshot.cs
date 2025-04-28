@@ -42,7 +42,6 @@ namespace Dnevnik.Journal.Infrastructure.Migrations
                         .HasColumnName("lesson_id");
 
                     b.Property<string>("Mark")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("mark");
 
